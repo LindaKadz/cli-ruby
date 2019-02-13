@@ -1,1 +1,4 @@
-Add new field to database for 'accepted terms on date'​,2019-02-12 03:54:47 -0600
+Add new field to database for 'accepted terms on date'​,2019-02-12 03:54:47 -0600,2019-02-13 03:54:44 -0600
+Debug ruby error,2019-02-13 02:20:16 -0600,
+Show Linda that this works,2019-02-13 03:27:01 -0600,2019-02-13 03:54:32 -0600
+Cook lunch,2019-02-13 03:50:46 -0600,
