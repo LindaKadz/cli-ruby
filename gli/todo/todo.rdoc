@@ -1,0 +1,5 @@
+= todo
+
+Generate this with
+    todo _doc
+After you have described your command line interface
