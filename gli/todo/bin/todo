@@ -39,13 +39,53 @@ command :new do |c|
 end
 
 desc 'lists all the tasks'
+# command :list do |c|
+#   c.flag :s
+#   c.action do |global_options,options,args|
+#     puts "Global:"
+#     puts "-f - #{global_options[:f]}"
+#     puts "Command:"
+#     puts "-s - #{options[:s]}"
+#   end
+# end
 command :list do |c|
-  c.flag :s
+
+  c.desc 'Format of the output'
+  c.arg_name 'csv|pretty'
+  c.default_value 'pretty'
+  c.flag :format
+  c.desc 'Auto-detect format based on TTY'
+  c.switch 'auto-detect'
+
   c.action do |global_options,options,args|
     puts "Global:"
     puts "-f - #{global_options[:f]}"
     puts "Command:"
     puts "-s - #{options[:s]}"
+    if options[:'auto-detect']
+      if STDOUT.tty?
+        options[:format] = 'pretty'
+      else
+        options[:format] = 'csv'
+      end
+    end
+    File.open(global_options[:filename]) do |file|
+      index = 1
+      file.readlines.each do |todo|
+        name,created,completed = todo.chomp.split(/,/)
+    if options[:format] == 'pretty'
+      # Use the pretty-print format
+          printf("%2d - %s\n",index,name)
+          printf("     %-10s %s\n","Created:",created)
+          printf("     %-10s %s\n","Completed:",completed) if completed
+    elsif options[:format] == 'csv'
+      # Use the machine-readable CSV format
+          complete_flag = completed ? "C" : "U"
+          printf("%d,%s,%s,%s,%s\n",index,name,complete_flag,created,completed)
+    end
+        index += 1
+      end
+    end
   end
 end
 
